@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_right_cs.c                                      :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stouitou <stouitou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 14:27:17 by stouitou          #+#    #+#             */
-/*   Updated: 2023/11/30 14:23:02 by stouitou         ###   ########.fr       */
+/*   Created: 2023/11/30 15:56:18 by stouitou          #+#    #+#             */
+/*   Updated: 2023/11/30 16:55:39 by stouitou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	ft_right_cs(t_print *tab, int i)
+void	ft_putnbr(long n)
 {
-	while (i)
+	long long	nb;
+
+	nb = n;
+	if (nb < 0)
 	{
-		if (!(i - 1) && tab->sign)
-			tab->tl += write(1, "+", 1);
-		else if ((tab->is_zero || tab->pnt) && !tab->sign)
-			tab->tl += write(1, "0", 1);
-		else
-			tab->tl += write(1, " ", 1);
-		i--;
+		write(1, "-", 1);
+		nb = -nb;
 	}
-	tab->is_zero = 0;
+	if (nb >= 10)
+		ft_putnbr(nb / 10);
+	ft_putchar_fd(nb % 10 + '0', 1);
 }

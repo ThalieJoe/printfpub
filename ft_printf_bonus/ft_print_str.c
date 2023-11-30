@@ -6,20 +6,16 @@
 /*   By: stouitou <stouitou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:00:59 by stouitou          #+#    #+#             */
-/*   Updated: 2023/11/29 17:07:18 by stouitou         ###   ########.fr       */
+/*   Updated: 2023/11/30 14:38:55 by stouitou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	ft_print_str(t_print *tab)
+void	ft_print(t_print *tab, char *str)
 {
-	char	*str;
-	int		i;
+	int	i;
 
-	str = va_arg(tab->args, char *);
 	i = 0;
-	if (!tab->dash && tab->wdt > ft_strlen(str) && !tab->pnt)
-		ft_right_cs(tab, tab->wdt - ft_strlen(str));
 	while (str[i])
 	{
 		if (tab->pnt && i == tab->wdt)
@@ -27,8 +23,28 @@ void	ft_print_str(t_print *tab)
 		tab->tl += write(1, &str[i], 1);
 		i++;
 	}
-	if (tab->dash && tab->wdt > ft_strlen(str))
-		ft_left_cs(tab, tab->wdt - ft_strlen(str));
+}
+
+void	ft_print_str(t_print *tab)
+{
+	char	*str;
+	int		len;
+	int		strnull;
+
+	str = va_arg(tab->args, char *);
+	strnull = 0;
+	if (str == NULL)
+	{
+		str = "(null)";
+		strnull = 1;
+	}
+	len = ft_strlen(str);
+	if (!tab->dash && tab->wdt > len && !tab->pnt)
+		ft_right_cs(tab, tab->wdt - len);
+	if (!strnull || (strnull && !tab->pnt))
+		ft_print(tab, str);
+	if (tab->dash && tab->wdt > len)
+		ft_left_cs(tab, tab->wdt - len);
 	tab->wdt = 0;
 	tab->pnt = 0;
 }

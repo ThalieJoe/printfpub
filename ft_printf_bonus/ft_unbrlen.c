@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_right_cs.c                                      :+:      :+:    :+:   */
+/*   ft_unbrlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stouitou <stouitou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 14:27:17 by stouitou          #+#    #+#             */
-/*   Updated: 2023/11/30 14:23:02 by stouitou         ###   ########.fr       */
+/*   Created: 2023/11/30 10:21:39 by stouitou          #+#    #+#             */
+/*   Updated: 2023/11/30 11:09:42 by stouitou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	ft_right_cs(t_print *tab, int i)
+int	ft_unbrlen(long unsigned int n, char *base)
 {
-	while (i)
+	int	len;
+
+	len = 1;
+	while (n >= ft_strlen(base))
 	{
-		if (!(i - 1) && tab->sign)
-			tab->tl += write(1, "+", 1);
-		else if ((tab->is_zero || tab->pnt) && !tab->sign)
-			tab->tl += write(1, "0", 1);
-		else
-			tab->tl += write(1, " ", 1);
-		i--;
+		n /= ft_strlen(base);
+		len++;
 	}
-	tab->is_zero = 0;
+	return (len);
 }

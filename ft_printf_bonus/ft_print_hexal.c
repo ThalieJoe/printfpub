@@ -1,43 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_int.c                                     :+:      :+:    :+:   */
+/*   ft_print_hexal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: stouitou <stouitou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 14:48:07 by stouitou          #+#    #+#             */
-/*   Updated: 2023/11/30 17:21:47 by stouitou         ###   ########.fr       */
+/*   Created: 2023/11/30 12:27:30 by stouitou          #+#    #+#             */
+/*   Updated: 2023/11/30 14:23:55 by stouitou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	ft_print_int(t_print *tab)
+void	ft_print_hexal(t_print *tab)
 {
-	long	d;
-	int	len;
+	unsigned int	x;
+	int				len;
 
-	d = va_arg(tab->args, int);
-	len = ft_nbrlen(d);
-	if (d < 0 && tab->pnt)
-	{	
-		tab->tl += write(1, "-", 1);
-		tab->sign = 0;
-		d *= -1;
-		len -= 1;
-	}
-	else if (d < 0)
-		tab->sign = 0;
-	if ((!tab->dash || tab->pnt) && tab->wdt > len)
+	x = va_arg(tab->args, unsigned int);
+	len = ft_unbrlen(x, "0123456789abcdef");
+	if (tab->htg && x != 0)
+		len += 2;
+	if (!tab->dash && tab->wdt > len)
 		ft_right_cs(tab, tab->wdt - len);
-	if (tab->wdt == 0 && tab->pnt && d == 0)
-		tab->pnt = 0;
-	else
-	{
-		ft_putnbr(d);
-		tab->tl += len;
-	}
-	if (tab->dash && tab->wdt > len && !tab->pnt)
+	if (tab->htg && x != 0)
+		tab->tl += write(1, "0x", 2);
+	tab->tl += ft_itoabase(x, "0123456789abcdef");
+	if (tab->dash && tab->wdt > len)
 		ft_left_cs(tab, tab->wdt - len);
 	tab->wdt = 0;
 	tab->pnt = 0;
+	tab->htg = 0;
 }

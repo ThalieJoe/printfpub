@@ -6,7 +6,7 @@
 /*   By: stouitou <stouitou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 14:28:02 by stouitou          #+#    #+#             */
-/*   Updated: 2023/11/29 15:40:34 by stouitou         ###   ########.fr       */
+/*   Updated: 2023/11/30 12:51:22 by stouitou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -18,4 +18,5 @@ void	ft_left_cs(t_print *tab, int i)
 		tab->tl += write(1, " ", 1);
 		i--;
 	}
+	tab->dash = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: stouitou <stouitou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 10:49:37 by stouitou          #+#    #+#             */
-/*   Updated: 2023/11/29 16:36:45 by stouitou         ###   ########.fr       */
+/*   Updated: 2023/11/30 17:30:05 by stouitou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -40,9 +40,12 @@ int	ft_eval_format(t_print *tab, const char *str, int i)
 			tab->sign = 1;
 		if (str[i] == '0' && !ft_isdigit(str[i - 1]))
 			tab->is_zero = 1;
-		if (ft_isdigit(str[i]))
+		if (str[i] == '#')
+			tab->htg = 1;
+		if (str[i] == '%')
+			tab->perc = 1;
+		if (ft_isdigit(str[i]) && (str[i - 1] != '-' && str[i + 1] != '.'))
 			tab->wdt = tab->wdt * 10 + (str[i] - '0');
-//		printf("wdt : %d\n", tab->wdt);
 		i++;
 	}
 	ft_checkcase(tab, str[i]);
